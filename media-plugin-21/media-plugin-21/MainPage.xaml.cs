@@ -3,10 +3,13 @@ using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Telerik.XamarinForms.Input;
 using Telerik.XamarinForms.RichTextEditor;
 using Xamarin.Forms;
@@ -80,6 +83,52 @@ namespace media_plugin_21
                 return;
             var fi = new FileInfo(file.Path);
             e.Accept(RichTextImageSource.FromStream(file.GetStream(), RichTextImageType.Jpeg));
+        }
+    }
+    class Bindings : INotifyPropertyChanged
+    {
+        public Bindings()
+        {
+            OpenImageEditorCommand = new Command(OnOpenImageEditor);
+        }
+        bool _IsImageEditorInvoked = false;
+        public bool IsImageEditorInvoked
+        {
+            get => _IsImageEditorInvoked;
+            set
+            {
+                if(_IsImageEditorInvoked != value)
+                {
+                    _IsImageEditorInvoked = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ICommand OpenImageEditorCommand { get; }
+        private void OnOpenImageEditor(object o)
+        {
+            IsImageEditorInvoked = true;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+    }
+    class CustomToolbarItem : RichTextEditorToolbarItem { }
+    class InvertBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value == null) ? false : !(bool)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

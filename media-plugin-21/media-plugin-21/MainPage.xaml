@@ -3,7 +3,14 @@
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              xmlns:telerikRichTextEditor="clr-namespace:Telerik.XamarinForms.RichTextEditor;assembly=Telerik.XamarinForms.RichTextEditor"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:media_plugin_21"
              x:Class="media_plugin_21.MainPage" BackgroundColor="#222222">
+    <ContentPage.Resources>
+        <local:InvertBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:Bindings />
+    </ContentPage.BindingContext>
     <Grid ColumnSpacing="0"
           RowSpacing="0">
         <Grid.RowDefinitions>
@@ -37,10 +44,12 @@
 
         <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
         <telerikRichTextEditor:RadRichTextEditor x:Name="richTextEditor"
+                                                 IsVisible="{Binding IsImageEditorInvoked, Converter={StaticResource InvertBool}}"
                                                  Margin="0,20,0,0"
                                                  Grid.Row="2"
                                                  PickImage="OnPickImage"/>
         <telerikRichTextEditor:RadRichTextEditorToolbar x:Name="richTextToolbar"
+                                                        IsVisible="{Binding IsImageEditorInvoked, Converter={StaticResource InvertBool}}"
                                                         Grid.Row="3"
                                                         RichTextEditor="{x:Reference richTextEditor}"
                                                         AutoGenerateItems="False">
@@ -48,7 +57,11 @@
             <telerikRichTextEditor:AddImageToolbarItem  Text="&#xE806;"
                                             HorizontalOptions="Start"
                                             FontFamily="sqfa-icon-font" />
-            
+            <local:CustomToolbarItem  Text="&#xE83C;"
+                                      HorizontalOptions="Start"
+                                      FontFamily="sqfa-icon-font"
+                                      Command="{Binding OpenImageEditorCommand}"/>
+
         </telerikRichTextEditor:RadRichTextEditorToolbar>
         <telerikInput:RadSegmentedControl Grid.Row="4"
                                           SegmentBackgroundColor="#FFFFFF"
