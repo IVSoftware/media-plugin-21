@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:telerikRichTextEditor="clr-namespace:Telerik.XamarinForms.RichTextEditor;assembly=Telerik.XamarinForms.RichTextEditor"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="media_plugin_21.MainPage" BackgroundColor="#222222">
+    <Grid ColumnSpacing="0"
+          RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57" />
+            <RowDefinition Height="57" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="57" />
+        </Grid.RowDefinitions>
+        
+        <!-- The segmented control programatically focuses and unfocuses the Entry, opening Soft Input -->
+        <telerikInput:RadEntry x:Name="entry" 
+                               BackgroundColor="WhiteSmoke"
+                               Padding="10,0,0,0"
+                               WatermarkText="ENTRY: Use button to focus!"
+                               WatermarkTextColor="#888888"
+                               Grid.Row="0" />
+        <telerikInput:RadSegmentedControl Grid.Row="1"
+                                          SegmentBackgroundColor="#FFFFFF"
+                                          SegmentTextColor="#3A9BFD"
+                                          SelectedSegmentBackgroundColor="#3A9BFD"
+                                          SelectedSegmentTextColor="#FFFFFF"
+                                          SelectionChanged="OnFocusChangedEntry">
+            <telerikInput:RadSegmentedControl.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Focus</x:String>
+                    <x:String>Unfocus</x:String>
+                </x:Array>
+            </telerikInput:RadSegmentedControl.ItemsSource>
+        </telerikInput:RadSegmentedControl>
+
+        <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
+        <telerikRichTextEditor:RadRichTextEditor x:Name="richTextEditor"
+                                                 Margin="0,20,0,0"
+                                                 Grid.Row="2" />
+        <telerikRichTextEditor:RadRichTextEditorToolbar x:Name="richTextToolbar"
+                                                        Grid.Row="3"
+                                                        RichTextEditor="{x:Reference richTextEditor}">
+
+            <telerikRichTextEditor:AddImageToolbarItem  Text="&#xE806;"
+                                            HorizontalOptions="Start"
+                                            FontFamily="sqfa-icon-font" />
+        </telerikRichTextEditor:RadRichTextEditorToolbar>
+        <telerikInput:RadSegmentedControl Grid.Row="4"
+                                          SegmentBackgroundColor="#FFFFFF"
+                                          SegmentTextColor="#3A9BFD"
+                                          SelectedSegmentBackgroundColor="#3A9BFD"
+                                          SelectedSegmentTextColor="#FFFFFF"
+                                          SelectionChanged="OnFocusChangedRRTE">
+            <telerikInput:RadSegmentedControl.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Focus</x:String>
+                    <x:String>Unfocus</x:String>
+                </x:Array>
+            </telerikInput:RadSegmentedControl.ItemsSource>
+        </telerikInput:RadSegmentedControl>
+    </Grid>
+</ContentPage>
