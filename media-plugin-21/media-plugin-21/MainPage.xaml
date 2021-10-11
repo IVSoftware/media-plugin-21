@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:telerikImageEditor="clr-namespace:Telerik.XamarinForms.ImageEditor;assembly=Telerik.XamarinForms.ImageEditor"
              xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
              xmlns:telerikRichTextEditor="clr-namespace:Telerik.XamarinForms.RichTextEditor;assembly=Telerik.XamarinForms.RichTextEditor"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:media_plugin_21"
-             x:Class="media_plugin_21.MainPage" BackgroundColor="#222222">
+             x:Class="media_plugin_21.MainPage"
+             BackgroundColor="#222222">
     <ContentPage.Resources>
         <local:InvertBoolConverter x:Key="InvertBool" />
     </ContentPage.Resources>
@@ -20,9 +22,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="57" />
         </Grid.RowDefinitions>
-        
+
         <!-- The segmented control programatically focuses and unfocuses the Entry, opening Soft Input -->
-        <telerikInput:RadEntry x:Name="entry" 
+        <telerikInput:RadEntry x:Name="entry"
                                BackgroundColor="WhiteSmoke"
                                Padding="10,0,0,0"
                                WatermarkText="ENTRY: Use button to focus!"
@@ -42,12 +44,12 @@
             </telerikInput:RadSegmentedControl.ItemsSource>
         </telerikInput:RadSegmentedControl>
 
-        <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
+        <!-- When IsImageEditorInvoked we make these NOT VISIBLE -->
         <telerikRichTextEditor:RadRichTextEditor x:Name="richTextEditor"
                                                  IsVisible="{Binding IsImageEditorInvoked, Converter={StaticResource InvertBool}}"
                                                  Margin="0,20,0,0"
                                                  Grid.Row="2"
-                                                 PickImage="OnPickImage"/>
+                                                 PickImage="OnPickImage" />
         <telerikRichTextEditor:RadRichTextEditorToolbar x:Name="richTextToolbar"
                                                         IsVisible="{Binding IsImageEditorInvoked, Converter={StaticResource InvertBool}}"
                                                         Grid.Row="3"
@@ -55,14 +57,15 @@
                                                         AutoGenerateItems="False">
 
             <telerikRichTextEditor:AddImageToolbarItem  Text="&#xE806;"
-                                            HorizontalOptions="Start"
-                                            FontFamily="sqfa-icon-font" />
+                                                        HorizontalOptions="Start"
+                                                        FontFamily="sqfa-icon-font" />
             <local:CustomToolbarItem  Text="&#xE83C;"
                                       HorizontalOptions="Start"
                                       FontFamily="sqfa-icon-font"
-                                      Command="{Binding OpenImageEditorCommand}"/>
+                                      Command="{Binding OpenImageEditorCommand}" />
 
         </telerikRichTextEditor:RadRichTextEditorToolbar>
+        <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
         <telerikInput:RadSegmentedControl Grid.Row="4"
                                           SegmentBackgroundColor="#FFFFFF"
                                           SegmentTextColor="#3A9BFD"
@@ -76,5 +79,16 @@
                 </x:Array>
             </telerikInput:RadSegmentedControl.ItemsSource>
         </telerikInput:RadSegmentedControl>
+
+        <!-- When IsImageEditorInvoked we make these VISIBLE -->
+        <telerikImageEditor:RadImageEditor x:Name="imageEditor"
+                                            IsVisible="{Binding IsImageEditorInvoked}"
+                                            Grid.Row="2"
+                                            Padding="4"
+                                            Source="{Binding Image}" />
+        <telerikImageEditor:RadImageEditorToolbar IsVisible="{Binding IsImageEditorInvoked}"
+                                                    Grid.Row="3"
+                                                    Padding="4"
+                                                    ImageEditor="{x:Reference imageEditor}" />
     </Grid>
 </ContentPage>

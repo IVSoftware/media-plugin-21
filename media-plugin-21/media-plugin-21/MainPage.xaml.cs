@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using Telerik.XamarinForms.Input;
 using Telerik.XamarinForms.RichTextEditor;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace media_plugin_21
 {
@@ -90,6 +92,7 @@ namespace media_plugin_21
         public Bindings()
         {
             OpenImageEditorCommand = new Command(OnOpenImageEditor);
+            // Image = ImageSource.FromResource("media_plugin_21.res.placeholder.png", GetType().Assembly);
         }
         bool _IsImageEditorInvoked = false;
         public bool IsImageEditorInvoked
@@ -104,6 +107,21 @@ namespace media_plugin_21
                 }
             }
         }
+
+        ImageSource _Image = null;
+        public ImageSource Image
+        {
+            get => _Image;
+            set
+            {
+                if((_Image == null) || !_Image.Equals(value))
+                {
+                    _Image = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
 
         public ICommand OpenImageEditorCommand { get; }
         private void OnOpenImageEditor(object o)
@@ -129,6 +147,22 @@ namespace media_plugin_21
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+    [ContentProperty(nameof(Source))]
+    class ImageResourceExtension : IMarkupExtension
+    {
+        public string Source { get; set; }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (Source == null)
+            {
+                return null;
+            }
+
+            var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
+            return imageSource;
         }
     }
 }
