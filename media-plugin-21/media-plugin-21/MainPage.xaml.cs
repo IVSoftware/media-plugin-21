@@ -81,9 +81,9 @@ namespace media_plugin_21
             await CrossMedia.Current.Initialize();
             var file = await CrossMedia.Current.TakePhotoAsync(_settings);
 
-            if (file == null)
-                return;
-            var fi = new FileInfo(file.Path);
+            if (file == null) return;           // Cancelled
+            var fi = new FileInfo(file.Path);   // Verify that Media Plugin reduces image size
+
             e.Accept(RichTextDataImageSource.FromFile(file.AlbumPath, RichTextImageType.Jpeg));
         }
     }
