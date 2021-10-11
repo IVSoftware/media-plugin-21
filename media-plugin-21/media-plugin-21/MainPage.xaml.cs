@@ -23,12 +23,6 @@ namespace media_plugin_21
         public MainPage()
         {
             InitializeComponent();
-            _settings = new StoreCameraMediaOptions
-            {
-                MaxWidthHeight = 150,
-                PhotoSize = PhotoSize.MaxWidthHeight,
-                Name = "thumbnail.jpg",
-            };
         }
 
         /// <summary>
@@ -75,7 +69,13 @@ namespace media_plugin_21
             }
         }
 
-        readonly StoreCameraMediaOptions _settings;
+        readonly StoreCameraMediaOptions _settings = new StoreCameraMediaOptions
+        {
+            MaxWidthHeight = 150,
+            PhotoSize = PhotoSize.MaxWidthHeight,
+            Name = "thumbnail.jpg",
+        };
+
         private async void OnPickImage(object sender, PickImageEventArgs e)
         {
             await CrossMedia.Current.Initialize();

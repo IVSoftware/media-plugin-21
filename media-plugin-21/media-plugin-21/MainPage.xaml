@@ -17,14 +17,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="57" />
         </Grid.RowDefinitions>
-
-        <!-- The segmented control programatically focuses and unfocuses the Entry, opening Soft Input -->
+    
+        <!-- E N T R Y -->
         <telerikInput:RadEntry x:Name="entry"
                                BackgroundColor="WhiteSmoke"
                                Padding="10,0,0,0"
                                WatermarkText="ENTRY: Use button to focus!"
                                WatermarkTextColor="#888888"
                                Grid.Row="0" />
+        <!-- The segmented control programatically focuses and unfocuses the Entry, opening Soft Input -->
         <telerikInput:RadSegmentedControl Grid.Row="1"
                                           SegmentBackgroundColor="#FFFFFF"
                                           SegmentTextColor="#3A9BFD"
@@ -39,6 +40,8 @@
             </telerikInput:RadSegmentedControl.ItemsSource>
         </telerikInput:RadSegmentedControl>
 
+
+        <!-- R A D    R I C H    T E X T    E D I T O R -->
         <telerikRichTextEditor:RadRichTextEditor x:Name="richTextEditor"
                                                  Margin="0,20,0,0"
                                                  Grid.Row="2"
