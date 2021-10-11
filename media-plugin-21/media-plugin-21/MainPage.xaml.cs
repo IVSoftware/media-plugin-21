@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Input;
+using Telerik.XamarinForms.RichTextEditor;
 using Xamarin.Forms;
 
 namespace media_plugin_21
@@ -14,6 +18,12 @@ namespace media_plugin_21
         public MainPage()
         {
             InitializeComponent();
+            _settings = new StoreCameraMediaOptions
+            {
+                MaxWidthHeight = 100,
+                PhotoSize = PhotoSize.Custom,
+                Name = "thumbnail.jpg",
+            };
         }
 
         /// <summary>
@@ -60,8 +70,16 @@ namespace media_plugin_21
             }
         }
 
-        private void OnPickImage(object sender, Telerik.XamarinForms.RichTextEditor.PickImageEventArgs e)
+        readonly StoreCameraMediaOptions _settings;
+        private async void OnPickImage(object sender, PickImageEventArgs e)
         {
+            await CrossMedia.Current.Initialize();
+            var file = await CrossMedia.Current.TakePhotoAsync(_settings);
+
+            if (file == null)
+                return;
+            var fi = new FileInfo(file.Path);
+            e.Accept(RichTextImageSource.FromStream(file.GetStream(), RichTextImageType.Jpeg));
         }
     }
 }
