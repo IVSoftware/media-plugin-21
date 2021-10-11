@@ -59,5 +59,9 @@ namespace media_plugin_21
                 segctl.SelectedIndex = -1;
             }
         }
+
+        private void OnPickImage(object sender, Telerik.XamarinForms.RichTextEditor.PickImageEventArgs e)
+        {
+        }
     }
 }

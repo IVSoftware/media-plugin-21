@@ -38,14 +38,17 @@
         <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
         <telerikRichTextEditor:RadRichTextEditor x:Name="richTextEditor"
                                                  Margin="0,20,0,0"
-                                                 Grid.Row="2" />
+                                                 Grid.Row="2"
+                                                 PickImage="OnPickImage"/>
         <telerikRichTextEditor:RadRichTextEditorToolbar x:Name="richTextToolbar"
                                                         Grid.Row="3"
-                                                        RichTextEditor="{x:Reference richTextEditor}">
+                                                        RichTextEditor="{x:Reference richTextEditor}"
+                                                        AutoGenerateItems="False">
 
             <telerikRichTextEditor:AddImageToolbarItem  Text="&#xE806;"
                                             HorizontalOptions="Start"
                                             FontFamily="sqfa-icon-font" />
+            
         </telerikRichTextEditor:RadRichTextEditorToolbar>
         <telerikInput:RadSegmentedControl Grid.Row="4"
                                           SegmentBackgroundColor="#FFFFFF"
