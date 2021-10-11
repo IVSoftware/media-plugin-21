@@ -25,8 +25,8 @@ namespace media_plugin_21
             InitializeComponent();
             _settings = new StoreCameraMediaOptions
             {
-                MaxWidthHeight = 100,
-                PhotoSize = PhotoSize.Custom,
+                MaxWidthHeight = 150,
+                PhotoSize = PhotoSize.MaxWidthHeight,
                 Name = "thumbnail.jpg",
             };
         }
@@ -84,7 +84,7 @@ namespace media_plugin_21
             if (file == null)
                 return;
             var fi = new FileInfo(file.Path);
-            e.Accept(RichTextImageSource.FromStream(file.GetStream(), RichTextImageType.Jpeg));
+            e.Accept(RichTextDataImageSource.FromFile(file.AlbumPath, RichTextImageType.Jpeg));
         }
     }
     class Bindings : INotifyPropertyChanged
@@ -92,7 +92,8 @@ namespace media_plugin_21
         public Bindings()
         {
             OpenImageEditorCommand = new Command(OnOpenImageEditor);
-            // Image = ImageSource.FromResource("media_plugin_21.res.placeholder.png", GetType().Assembly);
+            // Requires an image to enable toolbar
+            Image = ImageSource.FromResource("media_plugin_21.res.placeholder.png", GetType().Assembly);
         }
         bool _IsImageEditorInvoked = false;
         public bool IsImageEditorInvoked
@@ -121,7 +122,6 @@ namespace media_plugin_21
                 }
             }
         }
-
 
         public ICommand OpenImageEditorCommand { get; }
         private void OnOpenImageEditor(object o)

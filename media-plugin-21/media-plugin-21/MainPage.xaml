@@ -59,10 +59,14 @@
             <telerikRichTextEditor:AddImageToolbarItem  Text="&#xE806;"
                                                         HorizontalOptions="Start"
                                                         FontFamily="sqfa-icon-font" />
-            <local:CustomToolbarItem  Text="&#xE83C;"
+
+            <telerikRichTextEditor:EditImageToolbarItem Text="&#xE83C;"
+                                                        HorizontalOptions="Start"
+                                                        FontFamily="sqfa-icon-font" />
+            <!--local:CustomToolbarItem  Text="&#xE83C;"
                                       HorizontalOptions="Start"
                                       FontFamily="sqfa-icon-font"
-                                      Command="{Binding OpenImageEditorCommand}" />
+                                      Command="{Binding OpenImageEditorCommand}" /-->
 
         </telerikRichTextEditor:RadRichTextEditorToolbar>
         <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
@@ -82,13 +86,16 @@
 
         <!-- When IsImageEditorInvoked we make these VISIBLE -->
         <telerikImageEditor:RadImageEditor x:Name="imageEditor"
-                                            IsVisible="{Binding IsImageEditorInvoked}"
-                                            Grid.Row="2"
-                                            Padding="4"
-                                            Source="{Binding Image}" />
+                                           IsVisible="{Binding IsImageEditorInvoked}"
+                                           Grid.Row="2"
+                                           Padding="4"
+                                           Source="{Binding Image}" />
         <telerikImageEditor:RadImageEditorToolbar IsVisible="{Binding IsImageEditorInvoked}"
-                                                    Grid.Row="3"
-                                                    Padding="4"
-                                                    ImageEditor="{x:Reference imageEditor}" />
+                                                  Grid.Row="3"
+                                                  Padding="4"
+                                                  ImageEditor="{x:Reference imageEditor}"
+                                                  AutoGenerateItems="False">
+
+        </telerikImageEditor:RadImageEditorToolbar>
     </Grid>
 </ContentPage>
