@@ -87,4 +87,28 @@ namespace media_plugin_21
             e.Accept(RichTextDataImageSource.FromFile(file.AlbumPath, RichTextImageType.Jpeg));
         }
     }
+
+    public class CustomAddImageToolbarItem : RichTextEditorToolbarItem
+    {
+        public CustomAddImageToolbarItem()
+        {
+            Tapped += async (sender, e) =>
+            {
+                await CrossMedia.Current.Initialize();
+                var file = await CrossMedia.Current.TakePhotoAsync(_settings);
+                var imgSource = RichTextImageSource.FromFile(file.AlbumPath);
+                var image = new RichTextImage(imgSource, null, null, null);
+                if (this.RichTextEditor.InsertImageCommand.CanExecute(image))
+                {
+                    this.RichTextEditor.InsertImageCommand.Execute(image);
+                }
+            };
+        }
+        readonly StoreCameraMediaOptions _settings = new StoreCameraMediaOptions
+        {
+            MaxWidthHeight = 150,
+            PhotoSize = PhotoSize.MaxWidthHeight,
+            Name = "thumbnail.jpg",
+        };
+    }
 }

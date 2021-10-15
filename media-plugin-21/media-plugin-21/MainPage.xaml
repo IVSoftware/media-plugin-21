@@ -58,6 +58,7 @@
             <telerikRichTextEditor:EditImageToolbarItem Text="&#xE83C;"
                                                         HorizontalOptions="Start"
                                                         FontFamily="sqfa-icon-font" />
+            <local:CustomAddImageToolbarItem Text="!" />
 
         </telerikRichTextEditor:RadRichTextEditorToolbar>
         <!-- The segmented control tries without success to focus and unfocus the RichTextEditor and open Soft Input -->
